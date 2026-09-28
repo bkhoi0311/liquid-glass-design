@@ -1,0 +1,120 @@
+/* Liquid Glass Design — shared web tokens
+   Sources: rohitg00/awesome-claude-design (glass/apple.md, MIT),
+            deepika-builds/liquid-glass material recipe (MIT).
+   Prefix --lg-* to avoid clashing with the project's own tokens. */
+
+:root {
+  --lg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --lg-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+
+  --lg-bg: #ffffff;
+  --lg-bg-elevated: #ffffff;
+  --lg-surface-grouped: #f2f2f7;
+  --lg-separator: rgba(60, 60, 67, 0.18);
+  --lg-text: #1d1d1f;
+  --lg-text-secondary: rgba(60, 60, 67, 0.78);
+
+  --lg-blue: #007aff;  --lg-green: #34c759; --lg-red: #ff3b30;
+  --lg-orange: #ff9500; --lg-purple: #af52de; --lg-pink: #ff2d55;
+  --lg-tint: var(--lg-blue); /* one tint per surface */
+
+  --lg-material-thin: rgba(255, 255, 255, 0.60);
+  --lg-material-regular: rgba(255, 255, 255, 0.78);
+  --lg-material-thick: rgba(255, 255, 255, 0.92);
+  --lg-blur: 30px;
+  --lg-saturate: 180%;
+
+  --lg-radius-sm: 12px;
+  --lg-radius-md: 14px;
+  --lg-radius-lg: 28px;
+  --lg-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.55),
+                  inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  --lg-lift: 0 18px 50px rgba(0, 0, 0, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lg-bg: #000000;
+    --lg-bg-elevated: #1c1c1e;
+    --lg-surface-grouped: #2c2c2e;
+    --lg-separator: rgba(84, 84, 88, 0.65);
+    --lg-text: #f5f5f7;
+    --lg-text-secondary: rgba(235, 235, 245, 0.6);
+    --lg-blue: #0a84ff;
+    --lg-material-thin: rgba(28, 28, 30, 0.55);
+    --lg-material-regular: rgba(28, 28, 30, 0.72);
+    --lg-material-thick: rgba(28, 28, 30, 0.9);
+    --lg-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.22),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+    --lg-lift: 0 18px 50px rgba(0, 0, 0, 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  --lg-bg: #000000; --lg-bg-elevated: #1c1c1e; --lg-surface-grouped: #2c2c2e;
+  --lg-separator: rgba(84, 84, 88, 0.65); --lg-text: #f5f5f7;
+  --lg-text-secondary: rgba(235, 235, 245, 0.6); --lg-blue: #0a84ff;
+  --lg-material-thin: rgba(28, 28, 30, 0.55);
+  --lg-material-regular: rgba(28, 28, 30, 0.72);
+  --lg-material-thick: rgba(28, 28, 30, 0.9);
+  --lg-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.22), inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+  --lg-lift: 0 18px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Frosted glass — works in every modern browser */
+.lg-surface {
+  background: var(--lg-material-regular);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  border-radius: var(--lg-radius-lg);
+  box-shadow: var(--lg-highlight), var(--lg-lift);
+  color: var(--lg-text);
+  font-family: var(--lg-font);
+}
+.lg-surface--thin { background: var(--lg-material-thin); }
+.lg-surface--thick { background: var(--lg-material-thick); }
+
+/* Add on elements passed to liquidGlass(): lighter tint so the rim refraction shows.
+   The JS sets backdrop-filter itself; do not override it here. */
+.lg-refract {
+  background: linear-gradient(180deg, rgba(14, 14, 22, 0.10), rgba(14, 14, 22, 0.22));
+  border-radius: var(--lg-radius-lg);
+  box-shadow: var(--lg-highlight), inset 0 -8px 20px rgba(255, 255, 255, 0.06), var(--lg-lift);
+}
+
+.lg-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--lg-material-thin);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  border-bottom: 0.5px solid var(--lg-separator);
+}
+
+.lg-button {
+  min-height: 44px; padding: 10px 20px;
+  border: 0; border-radius: 999px;
+  font: 600 17px/1.2 var(--lg-font);
+  color: var(--lg-text);
+  background: var(--lg-material-thin);
+  -webkit-backdrop-filter: blur(20px) saturate(var(--lg-saturate));
+  backdrop-filter: blur(20px) saturate(var(--lg-saturate));
+  box-shadow: var(--lg-highlight);
+  transition: transform 160ms cubic-bezier(.2, .8, .2, 1), background 160ms;
+}
+.lg-button:active { transform: scale(0.96); }
+.lg-button--prominent { background: var(--lg-tint); color: #fff; }
+.lg-button:focus-visible { outline: none; box-shadow: var(--lg-highlight), 0 0 0 4px color-mix(in srgb, var(--lg-tint) 30%, transparent); }
+
+/* Accessibility fallbacks — keep these */
+@media (prefers-reduced-transparency: reduce) {
+  .lg-surface, .lg-refract, .lg-nav, .lg-button {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: var(--lg-bg-elevated) !important;
+  }
+}
+@media (prefers-contrast: more) {
+  .lg-surface, .lg-refract, .lg-nav { background: var(--lg-material-thick); box-shadow: inset 0 0 0 1px var(--lg-text); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-button { transition: none; }
+}

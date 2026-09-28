@@ -1,0 +1,8 @@
+{
+  "name": "apple-hig",
+  "description": "Apple Human Interface Guidelines reference skills (hig-*) for deeper platform and component lookups.",
+  "version": "1.0.0",
+  "author": { "name": "Bảo Khôi" },
+  "license": "MIT",
+  "keywords": ["apple-hig", "human-interface-guidelines", "ios", "macos", "visionos"]
+}
