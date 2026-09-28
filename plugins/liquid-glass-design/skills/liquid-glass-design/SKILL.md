@@ -3,131 +3,135 @@ name: liquid-glass-design
 description: DEFAULT design system for ANY visual or UI work — websites, landing pages, web apps, dashboards, components, HTML artifacts, mockups, React/Next.js/Vite/Tailwind, SwiftUI/iOS/macOS — in Apple's Liquid Glass style (iOS 26 / macOS Tahoe glass, glassmorphism, frosted translucent chrome, Apple HIG polish). Use it whenever the user asks to design, build, restyle or beautify an interface, even if "glass" or "Apple" is not mentioned. Does NOT apply to ClassIn-branded work (use design-classin-2026 / guide-classin-2026) or when the user names another style.
 ---
 
-# Liquid Glass Design
+# Liquid Glass Design (v2.2)
 
-One skill for Apple-grade Liquid Glass interfaces on web and SwiftUI. Goal: **beautiful, clear, professional** — premium through restraint, not effects.
+Apple-grade Liquid Glass interfaces on web and SwiftUI. Goal: **beautiful, clear, professional, trusted** — premium through restraint, not effects. v2.2 folds in what won two blind benchmark rounds (trust-first structure, hero discipline, contrast-safe tokens, light utility typography) and caps the cost of each build.
 
 ## 0. Scope and priority
 
-- This is the **default** for every design/UI request.
-- **Exception — ClassIn:** if the work is for ClassIn / EEO (or the user says "ClassIn design", "design-classin-2026"), use `design-classin-2026` (and `guide-classin-2026`) instead. Do not mix the two.
-- If the user explicitly names another style or brand system, follow the user. Keep this skill's quality gate (section 6) anyway.
-- Video, slides and documents use their own skills; borrow tokens from here only if asked.
+- **Default** for every design/UI request.
+- **Exception — ClassIn:** ClassIn / EEO work, or the user names `design-classin-2026` → use that skill (and `guide-classin-2026`). Never mix.
+- The user names another style or brand → follow the user; keep the quality gate (section 7).
+- Video, slides and documents use their own skills.
 
-## 1. Workflow (do in order)
+## 1. Design read (one line, before any code)
 
-1. **Classify the surface.**
-   - *Utility* (app screen, dashboard, form, settings, tool): motion near-invisible (≤300 ms), no cinematic effects.
-   - *Flagship* (landing, product, hero): motion is the substance — at least one scroll-linked scene; a static page fails.
-2. **Detect the platform.** `package.json` → web. `*.xcodeproj` / `Package.swift` → SwiftUI (go to section 5). Unclear and no repo → web.
-3. **Start from the kit, not from zero.**
-   - New page / artifact: copy `assets/starter.html` + `assets/tokens.css` + `assets/liquid-glass.js`, then replace content.
-   - Existing project: add `tokens.css` (as `app/liquid-glass.css` or `src/styles/liquid-glass.css`) and `liquid-glass.js` (to `public/`); map to the project's components.
-   - Single-file artifact: inline `tokens.css` and `liquid-glass.js` into the page.
-4. **Place glass only on floating chrome** (section 2), build content on solid surfaces, then add motion to the surface budget.
-5. **Run the quality gate** (section 6) and fix before saying "done".
+Write: **"Reading this as: ‹page kind› for ‹audience›, trust level ‹high/normal›, surface ‹utility/flagship›."**
+- **Audience decides, not taste.** B2B buyers (schools, finance, public sector, IT, procurement) = **trust-first**: calm, dense with facts, glass only on nav/toolbars, no cinematic effects except one product demo moment.
+- **Utility** (app, dashboard, form, settings): motion ≤ 300 ms, no scroll scenes.
+- **Flagship** (consumer launch, product showcase): at most ONE scroll-linked scene.
 
-## 2. The rules that make it look Apple (not AI-generic)
+## 2. Workflow and cost budget
+
+1. Design read (section 1).
+2. **Start from a kit page** — never from zero:
+   - Landing / marketing → `assets/starter.html`
+   - Dashboard / app screen → `assets/dashboard-starter.html`
+   - Always with `assets/tokens.css` (+ `assets/liquid-glass.js` only if refraction is used). Single-file deliverable → inline both.
+   - Existing project → add `tokens.css` as `app/liquid-glass.css` or `src/styles/liquid-glass.css`, `liquid-glass.js` to `public/`.
+3. Replace content with the real brief. Keep the structure; add sections the brief needs.
+4. Run the gate **once**: `python3 scripts/qa.py page.html [page2.html]` (needs `pip install playwright && playwright install chromium`; on Daniel's Mac use `~/Developer/liquid-glass-design/scripts/qa.sh page.html`) → read its report + the 3 screenshots → fix → run **once more**. Stop there.
+
+**Budget:** read at most 2 reference sections (grep the heading, read only that section). No repeated screenshot loops. No reading references "just in case". If the kit is not on disk, `git clone --depth 1 https://github.com/bkhoi0311/liquid-glass-design` once.
+
+## 3. Rules that make it look Apple and earn trust
 
 **Layering**
-- Glass = the **navigation/control layer floating above content**: nav bar, tab bar, toolbar, sidebar, sheet, popover, floating button, player/widget over media.
-- Content (text blocks, tables, forms, lists, cards of information) sits on **solid** `--lg-bg-elevated`. Ask: "could a plain solid card replace this glass with no loss?" — then use solid.
-- **Never glass on glass.** Group neighbouring glass controls in ONE container (`.lg-toolbar`), like SwiftUI `GlassEffectContainer`.
-- Glass needs something behind it. Over a flat page it is invisible — use `.lg-backdrop`, real imagery, or scrolling content.
+- Glass = floating chrome only: nav bar, tab bar, toolbar, sheet, popover, player/widget over media. Content (text, tables, forms, pricing, KPIs, lists) sits on **solid** `--lg-bg-elevated`.
+- Never glass on glass. Glass needs something behind it (imagery, `.lg-backdrop`, scrolling content).
+- Buttons on solid surfaces use `.lg-button` (fill + hairline) or `--prominent`. `.lg-button--glass` only over imagery.
 
-**Restraint**
-- **Light by default** (`#f5f5f7` page, white cards). Dark is either the user's OS setting or one deliberate section — never a dark-by-default hero.
-- **One accent** (`--lg-tint`, default `#0071e3`). Neutral everywhere else. Gradient text 0–1 times per page.
-- **Type + whitespace carry hierarchy**, not borders, boxes or glow. Big, tight headline (`.lg-display`, tracking −0.035em); body 17 px; secondary text in `--lg-text-secondary`.
-- **Show the real product**: real screenshot or a faithful UI mock in a device frame. Abstract blobs as "the product" = fail.
-- No hard 1 px borders on cards, no drop shadows on content cards, no rainbow tiles, no emoji icons. Use simple stroke SVG icons (never ship SF Symbols or SF Pro files on the web — license).
-- For every effect: "remove it — does the design lose meaning or only decoration?" Decoration → remove.
+**Colour and type**
+- Light by default (`#f5f5f7` page, white cards). Dark follows the OS; at most one deliberate dark section per page.
+- **One accent, locked for the whole page.** Text/links use `--lg-tint`, filled buttons `--lg-tint-fill`, text on soft tint `--lg-tint-ink`. Status uses `--lg-positive / --lg-negative / --lg-warning` — never the accent.
+- Only use token colours for text. Every text token passes 4.5:1; do not invent lighter greys or dim "inactive" text below 4.5:1 (hide it or keep it readable).
+- **One shape scale:** pill buttons, 20 px cards, 12 px inner items (concentric).
+- Font: use `--lg-font` / `--lg-font-display` exactly (SF → Segoe → Roboto → Helvetica → **Arial**). Never end a stack on `system-ui` (heavy DejaVu on Linux). Weights: display 650, titles 600, body 400 — avoid 700+ outside the hero.
+- Headline tracking −0.03em; body 17 px on marketing pages, 15 px (`.lg-dense` on `<body>`) on utility screens; `tabular-nums` for all figures.
 
-**Shape and space**
-- Radii: 12 / 18 / 26 / 36 / pill. **Concentric corners:** inner radius = outer radius − padding.
-- 4/8 pt spacing; sections 80–120 px apart on desktop; touch targets ≥ 44 px.
+**Landing page structure (trust-first)**
+1. **Hero fits the first viewport:** headline ≤ 2 lines desktop, subtext ≤ 25 words, max 4 text elements (optional eyebrow, headline, subtext, CTAs), 1 primary + max 1 secondary CTA, the **real product visible** (screenshot or faithful HTML mock) — split layout by default.
+2. **Proof row directly under the hero** (`.lg-proof`): the real numbers from the brief.
+3. Features: varied layout, exactly as many cells as items — no empty tiles, no empty areas inside cards.
+4. **Pricing** (`.lg-pricing`): featured tier = tint ring + badge **inside the card flow** (never overlapping the plan name); every tier has a visible button; show billing terms (VAT, per year).
+5. Testimonial: ≤ 3 lines, name + role + organisation.
+6. Final CTA with a concrete next step (demo length, phone/email as text).
+- **One label per intent** (e.g. "Đặt lịch demo" everywhere, not three variants). Button labels never wrap.
+- **Eyebrows (small labels above headings): max 1 per 3 sections.**
+- **Product mocks are complete and correct:** every panel filled with plausible content; any plotted curve/number is mathematically right; floating chips/cards sit **outside** key UI (never over buttons, names, titles, faces).
+
+**Content at rest**
+- Everything is readable with no scrolling or JS: reveal effects use `.lg-js .lg-reveal` (visible without JS), numbers are rendered final in HTML — **no count-up animations**.
+- Scroll scenes: max one, every step readable, no empty runway after the last step, and the section must make sense as a static screenshot.
 
 **Motion**
-- Spring-like curves (`--lg-ease`, `--lg-ease-spring`), interruptible, transform/opacity only.
-- Press feedback: `scale(0.96)`. Sheets rise with a spring. Reveal-on-scroll with `.lg-reveal`.
-- Always honour `prefers-reduced-motion`.
+- Spring-like curves (`--lg-ease`, `--lg-ease-spring`), transform/opacity only, press `scale(.97)`. Always honour `prefers-reduced-motion`.
 
-## 3. Web kit (assets/)
+**Mobile (390 px) — decide per section**
+- Every multi-column block states its phone layout. Tables become cards with **all** columns (`.lg-table` + `data-label`). Nothing may cross the right edge (`qa.py` checks).
+- **Tab bar only in apps/dashboards, never on marketing websites** (it covers content). Websites collapse the nav to logo + primary CTA (+ menu button). App top bar keeps search (short placeholder) + avatar; filters move into the page header.
+
+## 4. Dashboards (utility)
+
+- Order: page title + period → KPI row → main chart + "needs attention" → detail table.
+- **KPI** (`.lg-kpi`): label, value, delta = arrow + sign + unit + "so với tuần trước", semantic colour. **No decorative progress bars** unless there is a real target.
+- **Alerts** (`.lg-alert--critical / --warning / default` + `.lg-alert-icon`): compact rows, icon + 600-weight title + one-line meta + one **text** action (`.lg-button--plain`). Critical rows get a tinted background so problems stand out; information stays neutral; count pill in the header ("2 khẩn").
+- **Status colour = meaning:** negative/warning only for problems; scheduled / in progress = info; done = neutral.
+- **Use the brief's labels verbatim** (alert text, class names, menu items) — do not split, shorten or rename them.
+- **Mobile:** KPI cards 2 per row; every sidebar destination reachable (tab bar max 5 = 4 + "Thêm"/More).
+- **Charts:** bar charts use `.lg-bars` (HTML/CSS — text stays readable on phones; never let an SVG chart scale its text below 11 px). `--max` is a round number above the data max; value labels above bars; optional average line `.lg-bars-ref`; low values `.lg-bar--muted`, the highlight `.lg-bar--peak` (not orange/red unless it is a problem).
+- Sidebar colour spans the **whole page height** (paint it on the layout column, not on a 100vh box); current item `--lg-tint-ink` on `--lg-tint-soft`. Glass only on the sticky top bar and mobile tab bar.
+- Body `class="lg-dense"`; cards 20 px padding; avoid oversized alert boxes and heavy bold text.
+
+## 5. Web kit (assets/)
 
 | File | Purpose |
 |---|---|
-| `tokens.css` | All tokens (light + dark via OS or `data-theme`) and components below. Accessibility fallbacks included — do not delete them. |
-| `liquid-glass.js` | Real edge refraction + chromatic fringe via SVG displacement (Chromium). Safari/Firefox get frosted fallback automatically. |
-| `starter.html` | Reviewed reference page: floating nav, hero, glass player + toolbar + segmented control over a living backdrop, solid feature cards, grouped list, sheet, mobile tab bar, theme toggle. |
-| `LiquidGlass.tsx` | React/Next.js client component wrapping `liquid-glass.js` (loads once, destroys on unmount, skips on reduced transparency). |
+| `tokens.css` | Tokens (light/dark via OS or `data-theme`) + `.lg-root .lg-display .lg-secondary .lg-tertiary .lg-num` · `.lg-glass` (`--thin/--ultrathin/--thick/--media`) · `.lg-nav` (`--floating`) · `.lg-button` (`--prominent/--glass/--plain/--sm/--block`) · `.lg-icon-button .lg-toolbar .lg-segmented` · `.lg-card .lg-list` · `.lg-proof` · `.lg-pricing .lg-plan(--featured) .lg-plan-badge .lg-plan-price` · `.lg-kpis .lg-kpi .lg-delta--up/down/flat` · `.lg-bars .lg-bar(--peak/--muted) .lg-bars-ref` · `.lg-pill--positive/negative/warning/info/neutral` · `.lg-alert(--critical/--warning) .lg-alert-icon` · `.lg-table` · `.lg-dense` · `.lg-sheet .lg-tabbar .lg-backdrop .lg-reveal`. Accessibility fallbacks included — keep them. |
+| `starter.html` | Landing starter: floating nav, split hero with glass player over a living backdrop, proof row, feature grid, pricing, testimonial, final CTA, sheet, theme toggle. |
+| `dashboard-starter.html` | Dashboard starter (`.lg-dense`): full-height sidebar, glass top bar, KPI row, SVG chart, compact severity alerts, table→cards, mobile tab bar. |
+| `liquid-glass.js` | Real edge refraction (Chromium); frosted fallback elsewhere. `liquidGlass(el, { scale: -90, chroma: 5, blur: 4 })` on 1–3 hero elements ≤ 800 px. Decoration only. |
+| `LiquidGlass.tsx` | React/Next.js client wrapper (`"use client"`, `useEffect`, destroy on unmount). |
 
-**Classes:** `.lg-root` (on `<html>`), `.lg-display`, `.lg-secondary` · `.lg-glass` + `--thin | --ultrathin | --thick | --media` (media = dark tint + white text for photos/video) · `.lg-nav` (+ `--floating` capsule) · `.lg-button` (+ `--prominent | --plain | --sm`), `.lg-icon-button` · `.lg-toolbar` · `.lg-segmented` (buttons with `aria-pressed`) · `.lg-card`, `.lg-list`, `.lg-list-icon` (solid content) · `.lg-sheet` (on `<dialog>`) · `.lg-tabbar` · `.lg-backdrop` · `.lg-reveal` (+ `.is-in`).
+Tailwind: keep `tokens.css` and use the classes, or map tokens in `@theme` (`--color-tint: var(--lg-tint)` …). Deploy (Vercel/Netlify): static assets only; test Chrome AND Safari.
 
-**Refraction (`liquid-glass.js`)**
-```js
-const g = liquidGlass(el, { scale: -90, chroma: 5, blur: 4 }); // add class lg-refract to el
-// subtle -60/4 · default -112/6 · dramatic -180. g.supported false → frosted fallback. g.destroy() on unmount.
-```
-- Use on 1–3 hero elements (cards, player, floating toolbar) ≤ ~800 px per side. Never on full-page or scrolling lists.
-- Refraction is decoration only; the page must look finished in Safari.
-- Keep `color-interpolation-filters="sRGB"` (the module sets it).
+## 6. SwiftUI (iOS 26+ / macOS 26+)
 
-**React / Next.js:** copy `liquid-glass.js` to `public/`, import `tokens.css` once in the root layout, use `<LiquidGlass className="lg-glass--media">…</LiquidGlass>`. Glass JS is client-only (`"use client"`, inside `useEffect`).
-
-**Tailwind:** keep `tokens.css` and use the classes, or map tokens in `tailwind.config` / `@theme` (`--color-tint: var(--lg-tint)` etc.). Tailwind equivalent of `.lg-glass`: `bg-white/70 dark:bg-zinc-900/65 backdrop-blur-xl backdrop-saturate-[1.8] rounded-[26px] shadow-[inset_0_1px_0.5px_rgba(255,255,255,.85),0_0_0_.5px_rgba(0,0,0,.06),0_16px_40px_rgba(0,0,0,.12)]`.
-
-**Deploy (Vercel / Netlify / GitHub Pages):** the assets are static files; no env vars, no server code. Test the deployed URL in Chrome AND Safari.
-
-## 4. Special layouts
-
-- **Landing / marketing page:** apple.com formula — sticky translucent nav, product-as-hero, one idea per section, full-bleed feature sections, bento once, fat footer. Read `references/12-landing-page-applecom.md` and `13-scrollytelling.md`.
-- **Stats / summary cards:** Apple bento grid — `references/14-bento-grid.md`.
-- **App screens / settings / forms:** `references/07-component-anatomy.md`; loading, empty and error states from `08-states-loading-empty-error.md`.
-- **Dashboards:** solid cards on `--lg-bg`; glass only on the top bar, filters toolbar and floating actions. Charts on solid surfaces.
-
-## 5. SwiftUI (iOS 26+ / macOS 26+)
-
-Use native APIs — never fake glass with blur on these OS versions.
+Native APIs only — never fake glass with blur.
 ```swift
-Text("Label").padding().glassEffect()                                 // capsule, .regular
+Text("Label").padding().glassEffect()
 Image(systemName: "heart").padding().glassEffect(.regular.tint(.blue).interactive(), in: .rect(cornerRadius: 16))
 GlassEffectContainer(spacing: 30) { /* sibling glass controls; enables morphing */ }
-Button("Go") { }.buttonStyle(.glass)          // .glassProminent for the primary action
-.backgroundExtensionEffect()                   // content extends under sidebar/toolbar
+Button("Go") { }.buttonStyle(.glass)   // .glassProminent for the primary action
+.backgroundExtensionEffect()
 .tabBarMinimizeBehavior(.onScrollDown)
 ```
-- Glass only on navigation/controls; `.clear` only over bold media; `.identity` to switch glass off.
-- Remove old custom backgrounds on toolbars/tab bars/sheets — the system applies glass.
-- Details: `references/swiftui/overview.md` → `api-reference.md`, `migration-guide.md` (5-phase), `pitfalls.md`, `platform-specifics.md`, `landmarks-patterns.md`, `ios-ipados-surfaces.md`. Check Apple's current docs when an API looks uncertain.
+Glass only on navigation/controls; `.clear` only over bold media; `.identity` to disable; remove custom bar backgrounds. Details: `references/swiftui/`.
 
-## 6. Quality gate (must pass before "done")
+## 7. Quality gate (must pass before "done")
 
-1. **Screenshots:** light, dark and 390 px mobile (Playwright or the browser). Look at them; fix what looks off.
-2. **Contrast:** text on glass ≥ 4.5:1 against the brightest AND darkest area behind it. Fix by raising fill alpha or switching to `--media`, not by shrinking blur.
-3. **Safari/Firefox:** frosted fallback looks finished (no layout depending on refraction).
-4. **Accessibility:** reduced transparency → solid surfaces; reduced motion → no animation; `:focus-visible` rings; 44 px targets; semantic HTML and labels on icon buttons.
-5. **Restraint pass:** one accent; glass only on chrome; no glass-on-glass; gradient text ≤ 1; removed at least one effect since the first draft.
-6. **Surface budget:** utility screen is calm; flagship page has at least one scroll-linked scene.
-7. **No console errors;** no horizontal scroll at 390 px.
+`python3 scripts/qa.py page.html` checks JS errors, text contrast (solid backgrounds), clipped elements at 390 px, sideways scroll, invisible content, small tap targets, and saves light/dark/mobile screenshots. Then check by eye:
+1. Text on glass/gradients readable in the screenshots (the script lists how many to check).
+2. Hero: fits the first screen, product visible, ≤ 4 text elements.
+3. Proof row under hero; pricing badge not overlapping; one label per intent; eyebrows ≤ 1 per 3 sections.
+4. No empty areas, no chips covering UI, numbers final.
+5. Dark mode and 390 px layouts look finished; frosted fallback looks finished (Safari).
 
-## 7. References (read only the section you need)
+## 8. References (on demand, one section at a time)
 
-Files are long. `grep -n "^## " file` first, then read the one section. Old skill names inside files (apple-design-*) map to the files below.
+`grep -n "^## " file`, read only the needed section. Old names inside files (apple-design-*) map here.
 
 | File | Read when |
 |---|---|
-| `01-restraint-and-antislop.md` | Before any "make it premium/Apple" work; slop traps; surface budget |
-| `02-materials-liquid-glass.md` | Glass recipes, living backdrops, dark chrome glass, fidelity limits |
-| `03-glass-tokens-design-md.md` | Compact Apple glass token sheet (DESIGN.md format) |
-| `04-color.md` · `05-typography.md` · `06-layout-grid-spacing.md` | Palettes & semantic colour · type scale & tracking · grids, breakpoints, adaptive layout |
-| `07-component-anatomy.md` | Nav bars, lists, forms, buttons, alerts, search, empty states; multi-step flows |
-| `08-states-loading-empty-error.md` | Skeletons, optimistic UI, empty/error/disabled states |
-| `09-motion.md` · `10-microinteractions.md` | Springs, choreography, FLIP, scroll-progress · button/toggle/loading feedback |
-| `11-accessibility.md` | WCAG 2.2 AA, Dynamic Type reflow, reduce transparency/motion |
-| `12-landing-page-applecom.md` · `13-scrollytelling.md` | apple.com page formula, nav scroll states · pinned/scrubbed scenes |
-| `14-bento-grid.md` | Bento stat cards: tokens, zero-gap grid, templates, dark theme |
-| `swiftui/*` | Native Liquid Glass (section 5) |
+| `01-restraint-and-antislop.md` | Unsure how much effect is too much |
+| `02-materials-liquid-glass.md` | Custom glass recipe beyond the kit |
+| `03-glass-tokens-design-md.md` | Compact Apple token sheet |
+| `04-color.md` · `05-typography.md` · `06-layout-grid-spacing.md` | Custom palette · type scale · grids/breakpoints |
+| `07-component-anatomy.md` · `08-states-loading-empty-error.md` | Components not in the kit · loading/empty/error states |
+| `09-motion.md` · `10-microinteractions.md` | Springs, choreography · feedback details |
+| `11-accessibility.md` | WCAG edge cases |
+| `12-landing-page-applecom.md` · `13-scrollytelling.md` | Consumer flagship page · the one scroll scene |
+| `14-bento-grid.md` | Bento stat cards |
+| `swiftui/*` | Native Liquid Glass |
 
-**If `references/` or `assets/` is missing** (e.g. this skill was loaded from an account copy): `git clone --depth 1 https://github.com/bkhoi0311/liquid-glass-design` and read `plugins/liquid-glass-design/skills/liquid-glass-design/`.
-
-Sources (MIT): deepika-builds/liquid-glass, haider-nawaz/liquid-glass-skill, s1gmamale1/apple-design-skills, hubeiqiao/apple-bento-grid, rohitg00/awesome-claude-design.
+Sources (MIT): deepika-builds/liquid-glass, haider-nawaz/liquid-glass-skill, s1gmamale1/apple-design-skills, hubeiqiao/apple-bento-grid, rohitg00/awesome-claude-design. Trust-first structure informed by a blind benchmark against design-taste-frontend (2026-09-28).

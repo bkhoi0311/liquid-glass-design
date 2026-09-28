@@ -4,82 +4,82 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Liquid Glass Starter</title>
-<!-- Liquid Glass Design starter. Copy tokens.css + liquid-glass.js next to this file.
-     Replace copy/content; keep the structure: solid content, glass only on floating chrome. -->
+<!-- Liquid Glass Design v2.2 landing starter (websites: no app tab bar). Copy tokens.css + liquid-glass.js next to this file
+     (or inline both). Replace copy and content; keep the structure:
+     split hero with the real product -> proof row -> features -> pricing -> testimonial -> final CTA.
+     Glass only on floating chrome (nav, player/toolbar over the stage, sheet, tab bar). -->
 <link rel="stylesheet" href="tokens.css">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--lg-bg); }
   a { color: var(--lg-tint); }
-  .wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+  section { padding-block: var(--lg-space-20) 0; }
+  h2.lg-display { font-size: clamp(30px, 4vw, 44px); margin: 0 0 var(--lg-space-3); }
+  .section-lead { font-size: var(--lg-text-lg); max-width: 46ch; margin: 0 0 var(--lg-space-10); line-height: 1.4; }
 
   /* Nav */
-  .nav-inner { display: flex; align-items: center; gap: var(--lg-space-4); height: 52px; padding: 0 var(--lg-space-2) 0 var(--lg-space-5); }
+  .nav-inner { display: flex; align-items: center; gap: var(--lg-space-4); height: 56px; padding: 0 var(--lg-space-2) 0 var(--lg-space-5); }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; color: var(--lg-text); text-decoration: none; }
-  .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(145deg, #5ac8fa, var(--lg-tint)); box-shadow: inset 0 1px 0 rgba(255,255,255,.5); }
+  .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(145deg, #5ac8fa, var(--lg-tint-fill)); box-shadow: inset 0 1px 0 rgba(255,255,255,.5); }
   .nav-links { display: flex; gap: var(--lg-space-6); margin-left: var(--lg-space-6); }
   .nav-links a { color: var(--lg-text-secondary); text-decoration: none; font-size: var(--lg-text-sm); }
   .nav-links a:hover { color: var(--lg-text); }
   .nav-spacer { flex: 1; }
 
-  /* Hero */
-  .hero { text-align: center; padding: var(--lg-space-20) 0 var(--lg-space-10); }
-  .eyebrow { font-size: var(--lg-text-md); font-weight: 600; color: var(--lg-tint); margin: 0 0 var(--lg-space-3); }
-  .hero h1 { font-size: var(--lg-text-hero); margin: 0 auto; max-width: 14ch; }
-  .hero p { font-size: clamp(19px, 2.2vw, 22px); max-width: 38ch; margin: var(--lg-space-5) auto 0; line-height: 1.4; }
-  .hero-cta { display: flex; gap: var(--lg-space-3); justify-content: center; margin-top: var(--lg-space-8); flex-wrap: wrap; }
+  /* Hero: copy left, product right — both inside the first viewport. Max 4 text elements. */
+  .hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: var(--lg-space-10); align-items: center; padding-block: var(--lg-space-14) var(--lg-space-10); }
+  .hero h1 { font-size: var(--lg-text-hero); margin: 0; max-width: 13ch; }
+  .hero p { font-size: var(--lg-text-lg); line-height: 1.45; max-width: 34ch; margin: var(--lg-space-5) 0 0; }
+  .hero-cta { display: flex; gap: var(--lg-space-3); margin-top: var(--lg-space-8); flex-wrap: wrap; }
 
-  /* Stage: the colourful scene glass floats over */
-  .stage {
-    height: clamp(460px, 62vw, 620px); border-radius: var(--lg-radius-xl);
-    background:
-      radial-gradient(60% 80% at 20% 20%, #64d2ff 0%, transparent 60%),
-      radial-gradient(50% 70% at 85% 30%, #ff375f 0%, transparent 60%),
-      radial-gradient(60% 70% at 60% 95%, #ffd60a 0%, transparent 60%),
-      linear-gradient(135deg, #0a84ff, #5e5ce6);
-    display: grid; place-items: center; padding: var(--lg-space-6);
-  }
-  .stage-lines { position: absolute; inset: 0; z-index: -1; opacity: .35;
-    background: repeating-linear-gradient(115deg, rgba(255,255,255,.55) 0 2px, transparent 2px 38px); }
-  .scene { position: relative; width: min(520px, 100%); display: grid; gap: var(--lg-space-4); justify-items: center; }
-
-  .player { width: 100%; padding: var(--lg-space-5); border-radius: var(--lg-radius-xl); display: grid; grid-template-columns: 72px 1fr; gap: var(--lg-space-4); align-items: center; }
-  .cover { width: 72px; height: 72px; border-radius: var(--lg-radius-sm); background: conic-gradient(from 210deg, #ff9f0a, #ff375f, #bf5af2, #0a84ff, #ff9f0a); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+  /* Stage: the colourful scene the glass floats over */
+  .stage { border-radius: var(--lg-radius-xl); min-height: 440px; display: grid; place-items: center; padding: var(--lg-space-6);
+    background: radial-gradient(60% 80% at 20% 20%, #64d2ff 0%, transparent 60%), radial-gradient(50% 70% at 85% 30%, #ff375f 0%, transparent 60%),
+                radial-gradient(60% 70% at 60% 95%, #ffd60a 0%, transparent 60%), linear-gradient(135deg, #0a84ff, #5e5ce6); }
+  .scene { width: min(440px, 100%); display: grid; gap: var(--lg-space-4); justify-items: center; }
+  .player { width: 100%; padding: var(--lg-space-5); border-radius: var(--lg-radius-xl); display: grid; grid-template-columns: 64px 1fr; gap: var(--lg-space-4); align-items: center; }
+  .cover { width: 64px; height: 64px; border-radius: var(--lg-radius-sm); background: conic-gradient(from 210deg, #ff9f0a, #ff375f, #bf5af2, #0a84ff, #ff9f0a); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
   .player h3 { margin: 0; font-size: var(--lg-text-base); font-weight: 650; }
   .player p { margin: 2px 0 0; font-size: var(--lg-text-md); }
   .progress { grid-column: 1 / -1; display: grid; gap: 6px; }
-  .bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,.28); overflow: hidden; }
+  .bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,.3); overflow: hidden; }
   .bar i { display: block; width: 38%; height: 100%; background: #fff; border-radius: inherit; }
   .times { display: flex; justify-content: space-between; font-size: var(--lg-text-xs); font-variant-numeric: tabular-nums; }
   .controls { grid-column: 1 / -1; display: flex; justify-content: center; gap: var(--lg-space-6); }
   .controls .lg-icon-button:hover { background: rgba(255,255,255,.16); }
-
   .toolbar-row { display: flex; gap: var(--lg-space-3); flex-wrap: wrap; justify-content: center; }
 
-  /* Sections */
-  section.block { padding: var(--lg-space-20) 0 0; }
-  .block h2 { font-size: clamp(32px, 4.4vw, 48px); margin: 0 0 var(--lg-space-3); }
-  .block > .wrap > p { font-size: var(--lg-text-lg); max-width: 44ch; margin: 0 0 var(--lg-space-10); line-height: 1.4; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--lg-space-5); }
-  .feature h3 { font-size: var(--lg-text-lg); margin: var(--lg-space-5) 0 var(--lg-space-2); letter-spacing: -.02em; }
+  /* Features: varied layout, no empty cells */
+  .features { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--lg-space-5); }
+  .features .lg-card:nth-child(1) { grid-column: span 4; }
+  .features .lg-card:nth-child(2) { grid-column: span 2; }
+  .features .lg-card:nth-child(3), .features .lg-card:nth-child(4) { grid-column: span 3; }
+  .feature h3 { font-size: var(--lg-text-lg); margin: var(--lg-space-4) 0 var(--lg-space-2); letter-spacing: -.02em; }
   .feature p { margin: 0; }
-  .feature-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff; background: var(--lg-tint); }
+  .feature-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--lg-on-tint); background: var(--lg-tint-fill); }
   .feature-icon svg { width: 24px; height: 24px; }
 
-  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--lg-space-10); align-items: center; }
-  .settings-head { font-size: var(--lg-text-sm); text-transform: uppercase; letter-spacing: .02em; color: var(--lg-text-secondary); margin: 0 0 var(--lg-space-2) var(--lg-space-4); }
-  .chev { margin-left: auto; color: var(--lg-text-tertiary); }
-  .switch { margin-left: auto; width: 51px; height: 31px; border-radius: 16px; background: var(--lg-green); position: relative; flex: none; }
-  .switch::after { content: ""; position: absolute; top: 2px; right: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  /* Testimonial: max 3 lines, name + role + organisation */
+  .quote { display: grid; grid-template-columns: auto 1fr; gap: var(--lg-space-6); align-items: start; }
+  .quote-avatar { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--lg-tint-soft); color: var(--lg-tint-ink); font-weight: 700; }
+  .quote blockquote { margin: 0; font: 600 clamp(20px, 2.4vw, 26px)/1.35 var(--lg-font-display); letter-spacing: -.02em; max-width: 48ch; }
+  .quote figcaption { margin-top: var(--lg-space-3); color: var(--lg-text-secondary); font-size: var(--lg-text-md); }
 
-  footer { padding: var(--lg-space-20) 0 140px; font-size: var(--lg-text-sm); }
-  .lg-tabbar { display: none; }
+  /* Final CTA */
+  .final { text-align: center; padding: var(--lg-space-14) var(--lg-space-6); }
+  .final h2 { margin-inline: auto; max-width: 20ch; }
+  .final .hero-cta { justify-content: center; }
+  footer { padding: var(--lg-space-20) 0 var(--lg-space-10); font-size: var(--lg-text-sm); }
 
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: var(--lg-space-10); }
+    .features { grid-template-columns: 1fr; }
+    .features .lg-card:nth-child(n) { grid-column: auto; }
+  }
   @media (max-width: 760px) {
     .nav-links { display: none; }
-    .grid-3, .split { grid-template-columns: 1fr; }
-    .hero { padding-top: var(--lg-space-14); }
-    .lg-tabbar { display: flex; }
+    .stage { min-height: 380px; padding: var(--lg-space-4); }
+    .quote { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -89,48 +89,38 @@
   <div class="nav-inner">
     <a class="brand" href="#"><span class="brand-mark" aria-hidden="true"></span>Lumen</a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#features">Features</a><a href="#settings">Settings</a><a href="#">Pricing</a>
+      <a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#customers">Customers</a>
     </nav>
     <span class="nav-spacer"></span>
     <button class="lg-icon-button" id="theme" aria-label="Toggle dark mode">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
     </button>
-    <button class="lg-button lg-button--prominent lg-button--sm" data-open-sheet>Get started</button>
+    <button class="lg-button lg-button--prominent lg-button--sm" data-open-sheet>Book a demo</button>
   </div>
 </header>
 
 <main>
-  <section class="hero wrap">
-    <p class="eyebrow lg-reveal">New in Lumen 2</p>
-    <h1 class="lg-display lg-reveal">Controls that float. Content that leads.</h1>
-    <p class="lg-secondary lg-reveal">A glass layer for navigation and controls, over solid, readable content. Built on the system font and one accent colour.</p>
-    <div class="hero-cta lg-reveal">
-      <button class="lg-button lg-button--prominent" data-open-sheet>Try it free</button>
-      <a class="lg-button lg-button--plain" href="#features">Learn more ›</a>
+  <div class="wrap hero">
+    <div>
+      <h1 class="lg-display">Controls that float. Content that leads.</h1>
+      <p class="lg-secondary">A glass layer for navigation and controls over solid, readable content. One accent, the system font, nothing extra.</p>
+      <div class="hero-cta">
+        <button class="lg-button lg-button--prominent" data-open-sheet>Book a demo</button>
+        <a class="lg-button" href="#pricing">See pricing</a>
+      </div>
     </div>
-  </section>
-
-  <div class="wrap lg-reveal">
-    <div class="stage lg-backdrop">
-      <div class="stage-lines" aria-hidden="true"></div>
+    <div class="stage lg-backdrop" aria-label="Product preview">
       <div class="scene">
         <article class="player lg-glass lg-glass--media" id="refract" aria-label="Now playing">
           <div class="cover" aria-hidden="true"></div>
-          <div>
-            <h3>Morning Focus</h3>
-            <p class="lg-secondary">Deep Work Mix · 42 min</p>
-          </div>
-          <div class="progress">
-            <div class="bar"><i></i></div>
-            <div class="times lg-secondary"><span>16:04</span><span>−25:56</span></div>
-          </div>
+          <div><h3>Morning Focus</h3><p class="lg-secondary">Deep Work Mix · 42 min</p></div>
+          <div class="progress"><div class="bar"><i></i></div><div class="times lg-secondary"><span>16:04</span><span>−25:56</span></div></div>
           <div class="controls">
             <button class="lg-icon-button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12 18 6v12z"/></svg></button>
             <button class="lg-icon-button" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
             <button class="lg-icon-button" aria-label="Next"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
           </div>
         </article>
-
         <div class="toolbar-row">
           <div class="lg-toolbar lg-glass lg-glass--thin" role="toolbar" aria-label="Actions">
             <button class="lg-icon-button" aria-label="Like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
@@ -145,59 +135,79 @@
     </div>
   </div>
 
-  <section class="block" id="features">
+  <!-- Proof row directly under the hero: real numbers, rendered final (no count-up) -->
+  <div class="wrap"><div class="lg-proof" aria-label="Results">
+    <div><strong>120+</strong><span>teams onboarded</span></div>
+    <div><strong>4,800</strong><span>weekly active users</span></div>
+    <div><strong>92%</strong><span>use it every week</span></div>
+    <div><strong>98.5%</strong><span>sessions without issues</span></div>
+  </div></div>
+
+  <section id="features">
     <div class="wrap">
       <h2 class="lg-display lg-reveal">Quiet by default.</h2>
-      <p class="lg-secondary lg-reveal">Type and space carry the hierarchy. Glass is reserved for what floats.</p>
-      <div class="grid-3">
+      <p class="section-lead lg-secondary lg-reveal">Type and space carry the hierarchy. Glass is reserved for what floats.</p>
+      <div class="features">
         <article class="lg-card feature lg-reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M4 10h16"/></svg></div>
-          <h3>Layered, not stacked</h3>
-          <p class="lg-secondary">One glass layer above content. Never glass on glass.</p>
+          <h3>Layered, not stacked</h3><p class="lg-secondary">One glass layer above content. Never glass on glass.</p>
         </article>
         <article class="lg-card feature lg-reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor"/></svg></div>
-          <h3>Light and dark</h3>
-          <p class="lg-secondary">Every token has a dark twin. Contrast holds in both.</p>
+          <h3>Light and dark</h3><p class="lg-secondary">Every token has a dark twin.</p>
         </article>
         <article class="lg-card feature lg-reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="3"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
-          <h3>Accessible first</h3>
-          <p class="lg-secondary">Reduced transparency turns glass solid. 44 px targets.</p>
+          <h3>Accessible first</h3><p class="lg-secondary">Reduced transparency turns glass solid. 44 px targets.</p>
+        </article>
+        <article class="lg-card feature lg-reveal">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg></div>
+          <h3>Reports that decide</h3><p class="lg-secondary">Summary first, detail on demand.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="block" id="settings">
-    <div class="wrap split">
-      <div class="lg-reveal">
-        <h2 class="lg-display">Settings people understand.</h2>
-        <p class="lg-secondary" style="font-size:var(--lg-text-lg);line-height:1.4;max-width:34ch">Grouped lists, clear labels and one switch colour. Familiar on every device.</p>
-      </div>
-      <div class="lg-reveal">
-        <p class="settings-head">Notifications</p>
-        <div class="lg-list">
-          <div><span class="lg-list-icon" style="background:var(--lg-red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15Z"/></svg></span>Allow notifications<span class="switch" role="switch" aria-checked="true" aria-label="Allow notifications"></span></div>
-          <div><span class="lg-list-icon" style="background:var(--lg-indigo)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg></span>Focus schedule<span class="chev lg-secondary">22:00 – 07:00 ›</span></div>
-          <div><span class="lg-list-icon" style="background:var(--lg-green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg></span>Weekly summary<span class="chev">›</span></div>
-        </div>
+  <section id="pricing">
+    <div class="wrap">
+      <h2 class="lg-display">Simple pricing.</h2>
+      <p class="section-lead lg-secondary">Billed yearly. VAT invoice included.</p>
+      <div class="lg-pricing">
+        <article class="lg-plan"><h3>Basic</h3><div class="lg-plan-price">$4,500 <small>/ year</small></div>
+          <ul><li>Up to 20 rooms</li><li>Email support</li></ul><a class="lg-button lg-button--block" href="#">Choose Basic</a></article>
+        <article class="lg-plan lg-plan--featured"><span class="lg-plan-badge">Most popular</span><h3>Pro</h3><div class="lg-plan-price">$12,000 <small>/ year</small></div>
+          <ul><li>Up to 80 rooms</li><li>Onboarding and training</li><li>Priority support</li></ul><button class="lg-button lg-button--prominent lg-button--block" data-open-sheet>Book a demo</button></article>
+        <article class="lg-plan"><h3>Enterprise</h3><div class="lg-plan-price">Contact us</div>
+          <ul><li>Unlimited rooms</li><li>On-site hardware and maintenance</li></ul><a class="lg-button lg-button--block" href="#">Talk to sales</a></article>
       </div>
     </div>
   </section>
 
-  <footer class="wrap lg-secondary">Starter template · Liquid Glass Design</footer>
+  <section id="customers">
+    <div class="wrap">
+      <figure class="lg-card quote" style="margin:0">
+        <div class="quote-avatar" aria-hidden="true">JL</div>
+        <div><blockquote>“Our teams adopted it in a week. I finally see every room without walking the halls.”</blockquote>
+          <figcaption>Jane Lee, Head of Operations, Northfield Academy</figcaption></div>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="lg-card final">
+      <h2 class="lg-display">See it in your own rooms.</h2>
+      <p class="lg-secondary" style="margin:0 auto">30-minute demo, on site or online.</p>
+      <div class="hero-cta"><button class="lg-button lg-button--prominent" data-open-sheet>Book a demo</button></div>
+    </div></div>
+  </section>
+
+  <footer class="wrap lg-secondary">© 2026 Lumen · Starter template</footer>
 </main>
 
-<nav class="lg-tabbar lg-glass" aria-label="Tabs">
-  <a href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4Z"/></svg>Home</a>
-  <a href="#features"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>Browse</a>
-  <a href="#settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>Settings</a>
-</nav>
 
 <dialog class="lg-sheet" id="sheet" aria-labelledby="sheet-title">
-  <h2 id="sheet-title" class="lg-display" style="font-size:var(--lg-text-xl);margin:0 0 8px">Start your free trial</h2>
-  <p class="lg-secondary" style="margin:0 0 24px">14 days, no card required. Cancel any time.</p>
+  <h2 id="sheet-title" class="lg-display" style="font-size:var(--lg-text-xl);margin:0 0 8px">Book a demo</h2>
+  <p class="lg-secondary" style="margin:0 0 24px">30 minutes. We reply within one working day.</p>
   <form method="dialog" style="display:flex;gap:12px;justify-content:flex-end">
     <button class="lg-button" value="cancel">Not now</button>
     <button class="lg-button lg-button--prominent" value="ok">Continue</button>
@@ -206,37 +216,30 @@
 
 <script src="liquid-glass.js"></script>
 <script>
-  // Real refraction (Chromium); frosted fallback elsewhere. Skip when the user asked for less transparency.
-  (function () {
+  document.documentElement.classList.add('lg-js'); // enables reveal; without JS everything stays visible
+
+  (function () { // refraction on ONE hero element; frosted fallback elsewhere
     var el = document.getElementById('refract');
-    var lessGlass = matchMedia('(prefers-reduced-transparency: reduce)').matches;
-    if (el && window.liquidGlass && !lessGlass) {
+    if (el && window.liquidGlass && !matchMedia('(prefers-reduced-transparency: reduce)').matches) {
       el.classList.add('lg-refract');
       var g = liquidGlass(el, { scale: -90, chroma: 5, blur: 4 });
       if (!g.supported) el.classList.remove('lg-refract');
     }
   })();
 
-  // Theme toggle
   document.getElementById('theme').addEventListener('click', function () {
     var root = document.documentElement;
     var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     root.dataset.theme = dark ? 'light' : 'dark';
   });
-
-  // Segmented control
   document.querySelectorAll('.lg-segmented').forEach(function (group) {
     group.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       group.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
     });
   });
-
-  // Sheet
   var sheet = document.getElementById('sheet');
   document.querySelectorAll('[data-open-sheet]').forEach(function (b) { b.addEventListener('click', function () { sheet.showModal(); }); });
-
-  // Reveal on scroll
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
   }, { rootMargin: '0px 0px -8% 0px' });
