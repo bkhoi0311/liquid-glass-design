@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Liquid Glass Design — one merged skill for Apple-style Liquid Glass UI (web + SwiftUI). Default design system.",
-    "version": "2.2.0"
+    "version": "2.2.1"
   },
   "plugins": [
     {
       "name": "liquid-glass-design",
       "source": "./plugins/liquid-glass-design",
       "description": "Single skill: trust-first Liquid Glass rules, contrast-safe tokens + B2B components, landing & dashboard starters, qa.py quality gate, refraction JS, React wrapper, SwiftUI APIs, on-demand references.",
-      "version": "2.2.0",
+      "version": "2.2.1",
       "category": "design"
     }
   ]
