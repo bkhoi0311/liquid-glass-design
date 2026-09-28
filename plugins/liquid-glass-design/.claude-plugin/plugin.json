@@ -1,8 +1,18 @@
 {
   "name": "liquid-glass-design",
-  "description": "Apple-style Liquid Glass UI for web and SwiftUI: hub + web refraction module + SwiftUI glass APIs + apple-design family + bento grid.",
-  "version": "1.0.0",
-  "author": { "name": "Bảo Khôi" },
+  "description": "Apple-style Liquid Glass UI for web and SwiftUI in one skill. Default design system (except ClassIn work).",
+  "version": "2.0.0",
+  "author": {
+    "name": "Bảo Khôi"
+  },
   "license": "MIT",
-  "keywords": ["liquid-glass", "glassmorphism", "apple-design", "swiftui", "react", "nextjs", "design-system"]
+  "keywords": [
+    "liquid-glass",
+    "glassmorphism",
+    "apple-design",
+    "swiftui",
+    "react",
+    "nextjs",
+    "design-system"
+  ]
 }

@@ -1,61 +1,48 @@
 # Liquid Glass Design
 
-Apple-style Liquid Glass skills for Claude Code — one bundle for web (HTML, React, Next.js, Vite; deploys to Vercel/Netlify as static assets) and native SwiftUI (iOS 26+ / macOS 26+).
+One Claude Code skill for Apple-style Liquid Glass interfaces — web (HTML, React, Next.js, Vite, Tailwind; deploys to Vercel/Netlify as static assets) and native SwiftUI (iOS 26+ / macOS 26+). It is written to be the **default design system** for every UI request, except ClassIn-branded work.
 
-## What is inside
+## What is inside (v2 — merged)
 
-**Plugin `liquid-glass-design`** (core, 13 skills)
+```
+plugins/liquid-glass-design/skills/liquid-glass-design/
+  SKILL.md              rules, workflow, quality gate, kit reference, SwiftUI APIs
+  assets/tokens.css     tokens (light/dark) + components: glass, nav, buttons, toolbar,
+                        segmented, card, grouped list, sheet, tab bar, backdrop, reveal
+  assets/liquid-glass.js real edge refraction (Chromium) + frosted fallback
+  assets/starter.html   reviewed reference page (light, dark, mobile)
+  assets/LiquidGlass.tsx React / Next.js wrapper
+  references/           14 web topics + 7 SwiftUI files, read on demand only
+```
 
-| Skill | Use for | Source (MIT) |
-|---|---|---|
-| `liquid-glass-design` | Hub: routes by platform, shared tokens, a11y rules, React wrapper | this repo + rohitg00/awesome-claude-design |
-| `liquid-glass-web` | Real refraction for the web (`liquid-glass.js`, SVG displacement) + frosted fallback | deepika-builds/liquid-glass |
-| `liquid-glass-swiftui` | `.glassEffect()`, `GlassEffectContainer`, migration guide, pitfalls | haider-nawaz/liquid-glass-skill |
-| `apple-design` + 8 `apple-design-*` | HIG philosophy, foundations, materials, motion, OS surfaces, apple.com pages, a11y/marketing | s1gmamale1/apple-design-skills |
-| `apple-bento-grid` | Apple-style bento stat cards (HTML + PNG) | hubeiqiao/apple-bento-grid |
-
-**Plugin `apple-hig`** (optional, 14 `hig-*` skills) — full Human Interface Guidelines lookups, from raintree-technology/hig-doctor.
+v1 shipped 27 separate skills (13 + 14 HIG). v2 merges them into one and drops what does not serve UI work: backend/CDN analysis, marketing tactics, macOS/visionOS/watchOS notes, gestures, SF Symbols, design history, the 14 HIG skills and demo images.
 
 ## Install
 
-### 1. On your Mac, all projects (user scope)
-
-```bash
-# inside Claude Code
+**All projects on your Mac (user scope)**
+```
 /plugin marketplace add bkhoi0311/liquid-glass-design
 /plugin install liquid-glass-design@liquid-glass-design
-/plugin install apple-hig@liquid-glass-design      # optional
 ```
+Or `./scripts/install-global.sh` (symlink into `~/.claude/skills`). Use one route, not both.
 
-Or without the plugin system: `./scripts/install-global.sh` (symlinks into `~/.claude/skills`, `git pull` updates them).
-
-### 2. Inside one project (works locally AND in the cloud)
-
+**Inside one project (local + Claude Code on the web + GitHub Actions)**
 ```bash
-~/Developer/liquid-glass-design/scripts/add-to-project.sh /path/to/project            # vendor core 4 skills + web assets
-~/Developer/liquid-glass-design/scripts/add-to-project.sh /path/to/project --full     # all skills
-~/Developer/liquid-glass-design/scripts/add-to-project.sh /path/to/project --mode both
+~/Developer/liquid-glass-design/scripts/add-to-project.sh /path/to/project            # copy skill + web assets
+~/Developer/liquid-glass-design/scripts/add-to-project.sh /path/to/project --mode both # also register the plugin in .claude/settings.json
 git add .claude public/liquid-glass.js && git commit -m "Add Liquid Glass Design"
 ```
+Web assets are copied only when `package.json` exists: `public/liquid-glass.js` and `app/liquid-glass.css` (or `src/styles/liquid-glass.css`).
 
-| Mode | What it writes | Works in |
-|---|---|---|
-| `vendor` (default) | `.claude/skills/<skill>/` copied into the repo | Local, Claude Code on the web, GitHub Actions, teammates — no extra access needed |
-| `plugin` | `.claude/settings.json` → `extraKnownMarketplaces` + `enabledPlugins` | Anywhere Claude Code can reach this GitHub repo (keep the repo public, or grant access) |
+**Vercel:** does not run Claude Code. Commit the generated code and `public/liquid-glass.js`; they ship as static files.
 
-Web assets (only if `package.json` exists): `public/liquid-glass.js` and `app/liquid-glass.css` (or `src/styles/liquid-glass.css`). Vercel serves them as static files; no env vars.
+## Prompts
 
-### 3. Vercel / GitHub notes
-
-- Vercel does not run Claude Code; what matters there is that the generated code and `public/liquid-glass.js` are committed. The `.claude/` folder is ignored by the build.
-- GitHub Actions (`anthropics/claude-code-action`) and Claude Code on the web read `.claude/skills` and `.claude/settings.json` from the checked-out repo, so the vendor mode is the safe default.
-
-## Usage prompts
-
-- "Dùng liquid-glass-design, làm navbar + hero card kiểu iOS 26 cho trang Next.js này"
+- "Làm landing page cho sản phẩm X" — the skill applies by default
 - "Migrate this SwiftUI app to Liquid Glass"
-- "Tạo bento grid tổng kết Q3 theo phong cách Apple"
+- "Tạo bento grid tổng kết Q3"
+- ClassIn work → `design-classin-2026` takes over
 
 ## Licenses
 
-All sources are MIT; notices in `licenses/`. `haider-nawaz/liquid-glass-skill` states MIT in its README but ships no LICENSE file.
+MIT sources, notices in `licenses/`: deepika-builds/liquid-glass, haider-nawaz/liquid-glass-skill (MIT per README, no LICENSE file), s1gmamale1/apple-design-skills, hubeiqiao/apple-bento-grid, rohitg00/awesome-claude-design.

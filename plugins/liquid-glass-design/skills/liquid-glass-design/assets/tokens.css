@@ -1,0 +1,276 @@
+/* ==========================================================================
+   Liquid Glass Design — tokens + components (v2)
+   Drop-in CSS. Pair with liquid-glass.js for real refraction on Chromium.
+   Sources (MIT): rohitg00/awesome-claude-design glass/apple.md,
+   s1gmamale1/apple-design-skills (materials), deepika-builds/liquid-glass.
+   All custom properties are prefixed --lg-* to avoid clashing with a project.
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+
+  /* Type: system stack only. Never ship SF Pro webfont files (license). */
+  --lg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter var", system-ui, "Segoe UI", Roboto, sans-serif;
+  --lg-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Segoe UI", sans-serif;
+  --lg-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (HIG): 11 12 13 15 17 22 28 34 44 56 72 */
+  --lg-text-xs: 12px; --lg-text-sm: 13px; --lg-text-md: 15px; --lg-text-base: 17px;
+  --lg-text-lg: 22px; --lg-text-xl: 28px; --lg-text-2xl: 34px; --lg-text-3xl: 44px;
+  --lg-text-hero: clamp(40px, 6.2vw, 72px);
+
+  /* Neutrals — light (Apple marketing grey page, white cards) */
+  --lg-bg: #f5f5f7;
+  --lg-bg-elevated: #ffffff;
+  --lg-surface-grouped: #f2f2f7;
+  --lg-fill: rgba(120, 120, 128, 0.12);
+  --lg-separator: rgba(60, 60, 67, 0.16);
+  --lg-text: #1d1d1f;
+  --lg-text-secondary: rgba(60, 60, 67, 0.75);
+  --lg-text-tertiary: rgba(60, 60, 67, 0.5);
+
+  /* System tints — pick ONE as --lg-tint per product */
+  --lg-blue: #0071e3; --lg-green: #34c759; --lg-red: #ff3b30; --lg-orange: #ff9500;
+  --lg-purple: #af52de; --lg-pink: #ff2d55; --lg-teal: #30b0c7; --lg-indigo: #5856d6;
+  --lg-tint: var(--lg-blue);
+  --lg-on-tint: #ffffff;
+
+  /* Materials (alpha fill over backdrop blur) */
+  --lg-material-ultrathin: rgba(255, 255, 255, 0.42);
+  --lg-material-thin: rgba(255, 255, 255, 0.58);
+  --lg-material-regular: rgba(255, 255, 255, 0.72);
+  --lg-material-thick: rgba(255, 255, 255, 0.9);
+  --lg-blur: 24px;
+  --lg-saturate: 180%;
+
+  /* Edges & depth: glass reads as glass through its rim, not its blur */
+  --lg-rim: inset 0 1px 0.5px rgba(255, 255, 255, 0.85),
+            inset 0 -1px 0.5px rgba(255, 255, 255, 0.25),
+            inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+  --lg-edge: 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  --lg-lift-1: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 14px rgba(0, 0, 0, 0.06);
+  --lg-lift-2: 0 2px 6px rgba(0, 0, 0, 0.06), 0 16px 40px rgba(0, 0, 0, 0.12);
+
+  /* Shape — concentric radii: inner = outer - padding */
+  --lg-radius-xs: 8px; --lg-radius-sm: 12px; --lg-radius-md: 18px;
+  --lg-radius-lg: 26px; --lg-radius-xl: 36px; --lg-radius-pill: 999px;
+
+  /* Spacing — 4/8pt grid */
+  --lg-space-1: 4px; --lg-space-2: 8px; --lg-space-3: 12px; --lg-space-4: 16px;
+  --lg-space-5: 20px; --lg-space-6: 24px; --lg-space-8: 32px; --lg-space-10: 44px;
+  --lg-space-14: 56px; --lg-space-20: 80px; --lg-space-30: 120px;
+
+  /* Motion — spring-like curves; keep utility UI under 300ms */
+  --lg-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --lg-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --lg-dur-fast: 160ms; --lg-dur: 240ms; --lg-dur-slow: 420ms;
+}
+
+/* Dark tokens: OS preference unless data-theme="light"; forced by data-theme="dark" */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lg-bg: #000000; --lg-bg-elevated: #1c1c1e; --lg-surface-grouped: #1c1c1e;
+    --lg-fill: rgba(120, 120, 128, 0.24); --lg-separator: rgba(84, 84, 88, 0.6);
+    --lg-text: #f5f5f7; --lg-text-secondary: rgba(235, 235, 245, 0.62); --lg-text-tertiary: rgba(235, 235, 245, 0.34);
+    --lg-blue: #0a84ff;
+    --lg-material-ultrathin: rgba(40, 40, 44, 0.36); --lg-material-thin: rgba(36, 36, 40, 0.5);
+    --lg-material-regular: rgba(30, 30, 34, 0.66); --lg-material-thick: rgba(28, 28, 30, 0.88);
+    --lg-rim: inset 0 1px 0.5px rgba(255, 255, 255, 0.22), inset 0 -1px 0.5px rgba(255, 255, 255, 0.06),
+              inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+    --lg-edge: 0 0 0 0.5px rgba(255, 255, 255, 0.06);
+    --lg-lift-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+    --lg-lift-2: 0 2px 6px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  --lg-bg: #000000; --lg-bg-elevated: #1c1c1e; --lg-surface-grouped: #1c1c1e;
+  --lg-fill: rgba(120, 120, 128, 0.24); --lg-separator: rgba(84, 84, 88, 0.6);
+  --lg-text: #f5f5f7; --lg-text-secondary: rgba(235, 235, 245, 0.62); --lg-text-tertiary: rgba(235, 235, 245, 0.34);
+  --lg-blue: #0a84ff;
+  --lg-material-ultrathin: rgba(40, 40, 44, 0.36); --lg-material-thin: rgba(36, 36, 40, 0.5);
+  --lg-material-regular: rgba(30, 30, 34, 0.66); --lg-material-thick: rgba(28, 28, 30, 0.88);
+  --lg-rim: inset 0 1px 0.5px rgba(255, 255, 255, 0.22), inset 0 -1px 0.5px rgba(255, 255, 255, 0.06),
+            inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+  --lg-edge: 0 0 0 0.5px rgba(255, 255, 255, 0.06);
+  --lg-lift-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --lg-lift-2: 0 2px 6px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Base ---------- */
+.lg-root {
+  background: var(--lg-bg);
+  color: var(--lg-text);
+  font: 400 var(--lg-text-base)/1.47 var(--lg-font);
+  letter-spacing: -0.022em;
+  -webkit-font-smoothing: antialiased;
+}
+.lg-display { font-family: var(--lg-font-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; }
+.lg-secondary { color: var(--lg-text-secondary); }
+
+/* ---------- Glass material (frosted; every browser) ---------- */
+.lg-glass, .lg-surface {
+  position: relative;
+  background: var(--lg-material-regular);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  box-shadow: var(--lg-rim), var(--lg-edge), var(--lg-lift-2);
+  border-radius: var(--lg-radius-lg);
+  color: var(--lg-text);
+  isolation: isolate;
+}
+/* Specular sheen: light from the top edge */
+.lg-glass::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 42%);
+  mix-blend-mode: soft-light;
+}
+.lg-glass--thin { background: var(--lg-material-thin); }
+.lg-glass--ultrathin { background: var(--lg-material-ultrathin); }
+.lg-glass--thick { background: var(--lg-material-thick); }
+/* Over photos / video / saturated media: darker tint + white text keeps contrast */
+.lg-glass--media {
+  background: linear-gradient(180deg, rgba(20, 20, 26, 0.24), rgba(20, 20, 26, 0.42));
+  color: #fff;
+  box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.45), inset 0 0 0 0.5px rgba(255, 255, 255, 0.22), var(--lg-lift-2);
+}
+.lg-glass--media .lg-secondary { color: rgba(255, 255, 255, 0.74); }
+/* Element passed to liquidGlass(): the JS owns backdrop-filter; keep the fill light so the rim bend shows */
+.lg-refract { background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08)); }
+.lg-glass--media.lg-refract { background: linear-gradient(180deg, rgba(20, 20, 26, 0.2), rgba(20, 20, 26, 0.36)); }
+
+/* ---------- Navigation bar (floating chrome) ---------- */
+.lg-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--lg-material-thin);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  box-shadow: 0 0.5px 0 var(--lg-separator);
+}
+/* Floating capsule variant (iOS 26 / macOS Tahoe style) */
+.lg-nav--floating {
+  top: var(--lg-space-3); margin: var(--lg-space-3) auto 0; width: min(1080px, calc(100% - 24px));
+  border-radius: var(--lg-radius-pill);
+  box-shadow: var(--lg-rim), var(--lg-edge), var(--lg-lift-1);
+}
+
+/* ---------- Buttons ---------- */
+.lg-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--lg-space-2);
+  min-height: 44px; padding: 0 var(--lg-space-5);
+  border: 0; border-radius: var(--lg-radius-pill); cursor: pointer;
+  font: 590 var(--lg-text-base)/1 var(--lg-font); letter-spacing: -0.022em; text-decoration: none;
+  color: var(--lg-text);
+  background: var(--lg-material-thin);
+  -webkit-backdrop-filter: blur(16px) saturate(var(--lg-saturate));
+  backdrop-filter: blur(16px) saturate(var(--lg-saturate));
+  box-shadow: var(--lg-rim), var(--lg-edge);
+  transition: transform var(--lg-dur-fast) var(--lg-ease), background var(--lg-dur) var(--lg-ease), box-shadow var(--lg-dur) var(--lg-ease);
+}
+.lg-button:hover { background: var(--lg-material-regular); }
+.lg-button:active { transform: scale(0.96); }
+.lg-button--prominent { background: var(--lg-tint); color: var(--lg-on-tint); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+.lg-button--prominent:hover { background: color-mix(in srgb, var(--lg-tint) 88%, #000); }
+.lg-button--plain { background: none; box-shadow: none; color: var(--lg-tint); -webkit-backdrop-filter: none; backdrop-filter: none; padding: 0 var(--lg-space-2); }
+.lg-button--plain:hover { background: none; text-decoration: underline; }
+.lg-button--sm { min-height: 32px; padding: 0 var(--lg-space-4); font-size: var(--lg-text-md); }
+.lg-icon-button {
+  display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+  background: transparent; color: inherit; cursor: pointer;
+  transition: background var(--lg-dur-fast) var(--lg-ease), transform var(--lg-dur-fast) var(--lg-ease);
+}
+.lg-icon-button:hover { background: var(--lg-fill); }
+.lg-icon-button:active { transform: scale(0.92); }
+.lg-icon-button svg { width: 22px; height: 22px; }
+:where(.lg-button, .lg-icon-button, .lg-segmented button, .lg-tabbar a):focus-visible {
+  outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--lg-tint) 35%, transparent);
+}
+
+/* ---------- Toolbar (grouped glass controls — glass siblings share ONE container) ---------- */
+.lg-toolbar {
+  display: inline-flex; align-items: center; gap: var(--lg-space-1); padding: var(--lg-space-1);
+  border-radius: var(--lg-radius-pill);
+}
+
+/* ---------- Segmented control ---------- */
+.lg-segmented {
+  display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  padding: 3px; border-radius: var(--lg-radius-pill); background: var(--lg-fill);
+}
+.lg-segmented button {
+  min-height: 32px; padding: 0 var(--lg-space-4); border: 0; border-radius: var(--lg-radius-pill);
+  background: transparent; color: var(--lg-text); font: 500 var(--lg-text-sm)/1 var(--lg-font); cursor: pointer;
+  transition: background var(--lg-dur) var(--lg-ease);
+}
+.lg-segmented button[aria-pressed="true"] {
+  background: var(--lg-bg-elevated); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), var(--lg-edge); font-weight: 600;
+}
+
+/* ---------- Content surfaces (solid — content never sits on glass) ---------- */
+.lg-card { background: var(--lg-bg-elevated); border-radius: var(--lg-radius-lg); padding: var(--lg-space-8); box-shadow: var(--lg-edge); }
+.lg-list { background: var(--lg-bg-elevated); border-radius: var(--lg-radius-md); overflow: hidden; box-shadow: var(--lg-edge); }
+.lg-list > * {
+  position: relative; display: flex; align-items: center; gap: var(--lg-space-3);
+  min-height: 44px; padding: var(--lg-space-3) var(--lg-space-4);
+}
+.lg-list > * + *::before { content: ""; position: absolute; top: 0; right: 0; left: 58px; height: 0.5px; background: var(--lg-separator); }
+.lg-list-icon { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; flex: none; }
+.lg-list-icon svg { width: 18px; height: 18px; }
+
+/* ---------- Sheet / modal ---------- */
+.lg-sheet {
+  border: 0; padding: var(--lg-space-6); width: min(440px, calc(100% - 24px));
+  border-radius: var(--lg-radius-xl);
+  background: var(--lg-material-thick);
+  -webkit-backdrop-filter: blur(40px) saturate(var(--lg-saturate));
+  backdrop-filter: blur(40px) saturate(var(--lg-saturate));
+  box-shadow: var(--lg-rim), var(--lg-edge), 0 30px 80px rgba(0, 0, 0, 0.3);
+  color: var(--lg-text);
+}
+.lg-sheet::backdrop { background: rgba(0, 0, 0, 0.22); }
+.lg-sheet[open] { animation: lg-sheet-in var(--lg-dur-slow) var(--lg-ease-spring); }
+@keyframes lg-sheet-in { from { opacity: 0; transform: translateY(24px) scale(0.97); } }
+
+/* ---------- Tab bar (floating capsule, mobile) ---------- */
+.lg-tabbar {
+  position: fixed; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 60;
+  display: flex; gap: var(--lg-space-1); padding: var(--lg-space-1); border-radius: var(--lg-radius-pill);
+}
+.lg-tabbar a {
+  display: grid; place-items: center; gap: 2px; min-width: 64px; min-height: 52px; padding: 6px 10px; border-radius: var(--lg-radius-pill);
+  color: var(--lg-text-secondary); text-decoration: none; font: 500 10px/1 var(--lg-font); letter-spacing: 0;
+}
+.lg-tabbar a svg { width: 22px; height: 22px; }
+.lg-tabbar a[aria-current="page"] { color: var(--lg-tint); background: var(--lg-fill); }
+
+/* ---------- Living backdrop (glass needs something behind it) ---------- */
+.lg-backdrop { position: relative; overflow: hidden; isolation: isolate; }
+.lg-backdrop::before, .lg-backdrop::after {
+  content: ""; position: absolute; z-index: -1; width: 70%; aspect-ratio: 1; border-radius: 50%; filter: blur(60px); opacity: 0.85;
+  animation: lg-drift 22s var(--lg-ease) infinite alternate;
+}
+.lg-backdrop::before { background: radial-gradient(circle, #5ac8fa, transparent 65%); top: -30%; left: -15%; }
+.lg-backdrop::after { background: radial-gradient(circle, #ff9f0a, transparent 65%); bottom: -35%; right: -15%; animation-delay: -11s; }
+@keyframes lg-drift { to { transform: translate(12%, 8%) scale(1.12); } }
+
+/* ---------- Reveal on scroll (add .is-in via IntersectionObserver) ---------- */
+.lg-reveal { opacity: 0; transform: translateY(16px); transition: opacity 700ms var(--lg-ease), transform 700ms var(--lg-ease); }
+.lg-reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- Accessibility fallbacks — keep these ---------- */
+@media (prefers-reduced-transparency: reduce) {
+  .lg-glass, .lg-surface, .lg-refract, .lg-nav, .lg-button, .lg-sheet, .lg-toolbar, .lg-tabbar {
+    -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+    background: var(--lg-bg-elevated) !important;
+  }
+  .lg-glass--media { color: var(--lg-text); }
+  .lg-button--prominent { background: var(--lg-tint) !important; }
+}
+@media (prefers-contrast: more) {
+  .lg-glass, .lg-surface, .lg-nav, .lg-sheet, .lg-tabbar { background: var(--lg-material-thick); box-shadow: inset 0 0 0 1px var(--lg-text); }
+  .lg-secondary { color: var(--lg-text); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-backdrop::before, .lg-backdrop::after, .lg-sheet[open] { animation: none; }
+  .lg-reveal { opacity: 1; transform: none; transition: none; }
+  .lg-button, .lg-icon-button { transition: none; }
+}

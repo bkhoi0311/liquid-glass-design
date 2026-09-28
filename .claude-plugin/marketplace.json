@@ -1,20 +1,19 @@
 {
   "name": "liquid-glass-design",
-  "owner": { "name": "Bảo Khôi", "url": "https://github.com/bkhoi0311" },
-  "metadata": { "description": "Liquid Glass Design — Apple-style glass UI skills for web (React/Next.js/Vite, Vercel) and SwiftUI.", "version": "1.0.0" },
+  "owner": {
+    "name": "Bảo Khôi",
+    "url": "https://github.com/bkhoi0311"
+  },
+  "metadata": {
+    "description": "Liquid Glass Design — one merged skill for Apple-style Liquid Glass UI (web + SwiftUI). Default design system.",
+    "version": "2.0.0"
+  },
   "plugins": [
     {
       "name": "liquid-glass-design",
       "source": "./plugins/liquid-glass-design",
-      "description": "Core bundle: liquid-glass-design hub, liquid-glass-web, liquid-glass-swiftui, apple-design family (9), apple-bento-grid.",
-      "version": "1.0.0",
-      "category": "design"
-    },
-    {
-      "name": "apple-hig",
-      "source": "./plugins/apple-hig",
-      "description": "Optional: 14 Apple Human Interface Guidelines reference skills (from raintree-technology/hig-doctor).",
-      "version": "1.0.0",
+      "description": "Single merged skill: rules, tokens + components CSS, refraction JS, starter page, React wrapper, SwiftUI APIs, 20 on-demand references.",
+      "version": "2.0.0",
       "category": "design"
     }
   ]
