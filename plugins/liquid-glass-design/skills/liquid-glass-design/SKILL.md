@@ -89,7 +89,7 @@ Write: **"Reading this as: ‹page kind› for ‹audience›, trust level ‹hi
 |---|---|
 | `tokens.css` | Tokens (light/dark via OS or `data-theme`) + `.lg-root .lg-display .lg-secondary .lg-tertiary .lg-num` · `.lg-glass` (`--thin/--ultrathin/--thick/--media`) · `.lg-nav` (`--floating`) · `.lg-button` (`--prominent/--glass/--plain/--sm/--block`) · `.lg-icon-button .lg-toolbar .lg-segmented` · `.lg-card .lg-list` · `.lg-proof` · `.lg-pricing .lg-plan(--featured) .lg-plan-badge .lg-plan-price` · `.lg-kpis .lg-kpi .lg-delta--up/down/flat` · `.lg-bars .lg-bar(--peak/--muted) .lg-bars-ref` · `.lg-pill--positive/negative/warning/info/neutral` · `.lg-alert(--critical/--warning) .lg-alert-icon` · `.lg-table` · `.lg-dense` · `.lg-sheet .lg-tabbar .lg-backdrop .lg-reveal`. Accessibility fallbacks included — keep them. |
 | `starter.html` | Landing starter: floating nav, split hero with glass player over a living backdrop, proof row, feature grid, pricing, testimonial, final CTA, sheet, theme toggle. |
-| `dashboard-starter.html` | Dashboard starter (`.lg-dense`): full-height sidebar, glass top bar, KPI row, SVG chart, compact severity alerts, table→cards, mobile tab bar. |
+| `dashboard-starter.html` | Dashboard starter (`.lg-dense`): full-height sidebar, glass top bar, KPI row, CSS bar chart (.lg-bars), compact severity alerts, table→cards, mobile tab bar. |
 | `liquid-glass.js` | Real edge refraction (Chromium); frosted fallback elsewhere. `liquidGlass(el, { scale: -90, chroma: 5, blur: 4 })` on 1–3 hero elements ≤ 800 px. Decoration only. |
 | `LiquidGlass.tsx` | React/Next.js client wrapper (`"use client"`, `useEffect`, destroy on unmount). |
 
